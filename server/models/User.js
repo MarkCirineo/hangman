@@ -5,18 +5,18 @@ const userSchema = new Schema(
     {
         username: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
         },
         email: {
             type:String,
-            require: true,
+            required: true,
             unique: true,
             match: [/.+@.+\..+/, 'Must use a valid email address'],
         },
         password: {
             type: String,
-            require: true,
+            required: true,
         },
         wins: {
             type: Number,
