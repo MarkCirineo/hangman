@@ -46,9 +46,9 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         deleteUser: User
         createTeam(name: String!): Team
-        joinTeam(name: String!): Team
-        leaveTeam(name: String!): Team
-        deleteTeam(name: String!): Team
+        joinTeam(_id: ID!): Team
+        leaveTeam(_id: ID!): Team
+        deleteTeam(_id: ID!): Team
         win: User
         lose: User
     }
