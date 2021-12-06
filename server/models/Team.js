@@ -28,6 +28,7 @@ const teamSchema = new Schema(
         },
         rating: {
             type: Number,
+            default: 0,
         },
         createdBy: {
             type: Schema.Types.ObjectId,
