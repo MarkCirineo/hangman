@@ -20,15 +20,19 @@ const userSchema = new Schema(
         },
         wins: {
             type: Number,
+            default: 0
         },
         losses: {
             type: Number,
+            default: 0
         },
         gamesPlayed: {
             type: Number,
+            default: 0
         },
         rating: {
             type: Number,
+            default: 0
         },
         team: {
             type: Schema.Types.ObjectId,
