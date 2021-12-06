@@ -61,8 +61,25 @@ const resolvers = {
                         name, 
                         leader: context.user.username, 
                         members: [context.user.username], 
+                        wins: context.user.wins,
+                        losses: context.user.losses,
+                        gamesPlayed: context.user.gamesPlayed,
                         createdBy: context.user.username 
                     }
+                );
+                const updatedUser = await User.findOneAndUpdate(
+                    {
+                        _id: context.user._id,
+                    },
+                    {
+                        $set: {
+                            team: team._id,
+                        },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    },
                 );
                 return team;
             }
@@ -76,11 +93,30 @@ const resolvers = {
                         $addToSet: {
                             members: context.user._id,
                         },
+                        $inc: {
+                            wins: context.user.wins,
+                            losses: context.user.losses,
+                            gamesPlayed: context.user.gamesPlayed,
+                        },
                     },
                     {
                         new: true,
                         runValidators: true,
                     }
+                );
+                const updatedUser = await User.findOneAndUpdate(
+                    {
+                        _id: context.user._id,
+                    },
+                    {
+                        $set: {
+                            team: _id,
+                        },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
+                    },
                 );
                 return updatedTeam;
             }
@@ -94,9 +130,28 @@ const resolvers = {
                         $pull: {
                             members: context.user._id,
                         },
+                        $inc: {
+                            wins: -context.user.wins,
+                            losses: -context.user.losses,
+                            gamesPlayed: -context.user.gamesPlayed,
+                        }
                     },
                     {
                         new: true,
+                    },
+                );
+                const updatedUser = await User.findOneAndUpdate(
+                    {
+                        _id: context.user._id,
+                    },
+                    {
+                        $unset: {
+                            team: "",
+                        },
+                    },
+                    {
+                        new: true,
+                        runValidators: true,
                     },
                 );
                 return updatedTeam;
