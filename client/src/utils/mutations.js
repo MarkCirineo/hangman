@@ -68,3 +68,27 @@ export const DELETE_TEAM = gql`
         }
     }
 `;
+
+export const WIN = gql`
+    mutation win {
+        win {
+            _id 
+            username 
+            wins
+            losses
+            gamesPlayed
+        }
+    }
+`;
+
+export const LOSE = gql`
+    mutation lose {
+        lose {
+            _id 
+            username 
+            wins
+            losses
+            gamesPlayed
+        }
+    }
+`;
