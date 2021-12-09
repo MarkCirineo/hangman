@@ -31,3 +31,40 @@ export const DELETE_USER = gql`
         }
     }
 `;
+
+export const CREATE_TEAM = gql`
+    mutation createTeam($name: String!) {
+        createTeam(name: $name) {
+            _id
+            name 
+            leader
+        }
+    }
+`;
+
+export const JOIN_TEAM = gql`
+    mutation joinTeam($_id: ID!) {
+        joinTeam(_id: $_id) {
+            _id
+            name
+        }
+    }
+`;
+
+export const LEAVE_TEAM = gql`
+    mutation leaveTeam($_id: ID!) {
+        leaveTeam(_id: $_id) {
+            _id
+            name
+        }
+    }
+`;
+
+export const DELETE_TEAM = gql`
+    mutation deleteTeam($_id: ID!) {
+        deleteTeam(_id: $_id) {
+            _id
+            name
+        }
+    }
+`;
