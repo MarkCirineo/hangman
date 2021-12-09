@@ -57,3 +57,45 @@ export const GET_USERS = gql`
         }
     }
 `;
+
+export const GET_TEAM = gql`
+    query team($_id: ID!) {
+        team(_id: $_id) {
+            _id
+            name 
+            leader
+            members {
+                _id 
+                username 
+            }
+            wins
+            losses
+            gamesPlayed
+            rating
+            createdBy
+            createdAt
+            updatedAt
+        }
+    }
+`;
+
+export const GET_TEAMS = gql`
+    query teams {
+        teams {
+            _id
+            name 
+            leader
+            members {
+                _id 
+                username 
+            }
+            wins
+            losses
+            gamesPlayed
+            rating
+            createdBy
+            createdAt
+            updatedAt
+        }
+    }
+`;
