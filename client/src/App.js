@@ -7,7 +7,9 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import NavBar from "./components/NavBar/NavBar";
 
 const httpLink = createHttpLink({
     uri: "/graphql",
@@ -33,6 +35,7 @@ function App() {
     return (
         <ApolloProvider client={client}>
             <Router>
+                <NavBar />
                 <Switch>
                     <Route>
                         <div>
