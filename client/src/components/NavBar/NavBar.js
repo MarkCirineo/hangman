@@ -40,9 +40,15 @@ const NavBar = () => {
                         <li><Nav.Link as={Link} to="/play">New Game</Nav.Link></li>
                         <li><Nav.Link as={Link} to="/leaderboard">Leaderboards</Nav.Link></li>
                         {Auth.loggedIn() ? (
-                            <li><Nav.Link as={Link} to="/">Profile</Nav.Link></li>
+                            <>
+                                <li><Nav.Link as={Link} to="/">Profile</Nav.Link></li>
+                                <li><Nav.Link onClick={Auth.logout}>Logout</Nav.Link></li>
+                            </>
                         ) : (
-                            <li><Nav.Link as={Link} to="/login">Login/Signup</Nav.Link></li>
+                            <>
+                                <li><Nav.Link as={Link} to="/login">Login</Nav.Link></li>
+                                <li><Nav.Link as={Link} to="/login">Signup</Nav.Link></li>
+                            </>
                         )}
                     </ul>
                 </div>
