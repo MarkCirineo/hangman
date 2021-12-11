@@ -11,20 +11,6 @@ nav div {
     overflow: hidden;
 }
 
-nav div:active {
-    width: 100%;
-}
-
-nav div:active li {
-    left: 0px;
-}
-
-nav div:active p {
-    border: 0;
-    justify-content: start;
-    margin-left: 10px;
-}
-
 nav p {
     font-size: 1.5em;
     font-weight: 100;
