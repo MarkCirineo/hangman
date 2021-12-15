@@ -47,7 +47,7 @@ const NavBar = () => {
                         ) : (
                             <>
                                 <li><Nav.Link as={Link} to="/login">Login</Nav.Link></li>
-                                <li><Nav.Link as={Link} to="/login">Signup</Nav.Link></li>
+                                <li><Nav.Link as={Link} to="/signup">Signup</Nav.Link></li>
                             </>
                         )}
                     </ul>
