@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 
 const httpLink = createHttpLink({
     uri: "/graphql",
@@ -38,7 +39,8 @@ function App() {
             <Router>
                 <NavBar />
                 <Switch>
-                    <Route exact path="/login" component={Login} />              
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/signup" component={Signup} />              
                 </Switch>
             </Router>
         </ApolloProvider>
