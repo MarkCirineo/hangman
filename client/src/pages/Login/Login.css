@@ -19,3 +19,12 @@
 .form-label {
     margin-bottom: 2px!important;
 }
+
+.alert-danger .close {
+    border: 0;
+    border-radius: 6px;
+    background-color: #f8d7da;
+    color: #dc3545;
+    font-weight: 800;
+    font-size: 18px;
+}
