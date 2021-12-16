@@ -1,0 +1,30 @@
+.login-page {
+    margin-top: 10%;
+    margin-bottom: 4%;
+}
+
+.login-page a {
+    color: rgb(139, 222, 255);
+}
+
+.login-page a:hover {
+    color: rgb(226, 226, 255);
+}
+
+.signin-container {
+    background-color: rgb(100, 100, 100);
+    border-radius: 3px;
+}
+
+.form-label {
+    margin-bottom: 2px!important;
+}
+
+.alert-danger .close {
+    border: 0;
+    border-radius: 6px;
+    background-color: #f8d7da;
+    color: #dc3545;
+    font-weight: 800;
+    font-size: 18px;
+}
