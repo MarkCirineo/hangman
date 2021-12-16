@@ -1,0 +1,17 @@
+.signup-page {
+    margin-top: 10%;
+    margin-bottom: 4%;
+}
+
+.signup-container {
+    background-color: rgb(100, 100, 100);
+    border-radius: 3px;
+}
+
+.signup-page a {
+    color: rgb(139, 222, 255);
+}
+
+.signup-page a:hover {
+    color: rgb(226, 226, 255);
+}
