@@ -7,7 +7,7 @@ nav div {
     width: 60px;
     height: 60px;
     transition-property: width;
-    transition-duration: 1.5s;
+    transition-duration: 1s;
     overflow: hidden;
 }
 
@@ -24,7 +24,7 @@ nav p {
     justify-content: center;
     align-items: center;
     transition-property: border;
-    transition-delay: 1.5s;
+    transition-delay: 1s;
 }
 
 #inner {
