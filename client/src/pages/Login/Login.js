@@ -10,6 +10,7 @@ const Login = () => {
     const [userFormData, setUserFormData] = useState({ email: "", password: "" });
     const [validated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [showEmailAlert, setShowEmailAlert] = useState(false);
     
     const [login] = useMutation(LOGIN_USER);
 
@@ -20,6 +21,8 @@ const Login = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        setShowEmailAlert(false);
+        setShowAlert(false);
 
         const form = e.currentTarget;
         if(!form.checkValidity()) {
@@ -33,20 +36,18 @@ const Login = () => {
             });
             Auth.login(data.login.token);
         } catch (err) {
-            console.log(err);
-            setShowAlert(true);
+            if (err.message === "No user found with this email address") {
+                setShowEmailAlert(true);
+            } else {
+                setShowAlert(true);
+            }
         }
-
-        setUserFormData({ email: "", password: "" });
     };
 
     return (
         <div className="login-page">
             <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="container text-white d-flex justify-content-center">
                 <div className="signin-container p-5 col-11 col-md-6 col-lg-5">
-                    <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
-                        Something went wrong with your login credentials!
-                    </Alert>
                     <h3 className="mb-4">Sign In</h3>
 
                     <Form.Group className="mb-4">
@@ -60,6 +61,9 @@ const Login = () => {
                             value={userFormData.email}
                         />
                     </Form.Group>
+                    <Alert dismissible onClose={() => setShowEmailAlert(false)} show={showEmailAlert} variant="danger">
+                        No user found with this email address!
+                    </Alert>
 
                     <Form.Group className="mb-3">
                         <Form.Label>Password</Form.Label>
@@ -72,9 +76,12 @@ const Login = () => {
                             value={userFormData.password}
                         />
                     </Form.Group>
-                        <Button type="submit" className="col-12 mt-3 mb-2 btn btn-primary btn-block">
-                            Submit
-                        </Button>
+                    <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
+                        Something went wrong with your login credentials!
+                    </Alert>
+                    <Button type="submit" className="col-12 mt-3 mb-2 btn btn-primary btn-block">
+                        Submit
+                    </Button>
                     {/* <p className="forgot-password text-right">
                         Forgot <a href="#">password?</a>
                     </p> */}
