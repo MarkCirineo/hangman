@@ -52,7 +52,6 @@ const Signup = () => {
             });
             Auth.login(data.addUser.token);
         } catch (err) {
-            console.log(err);
             if (err.message.split(" ").slice(0, 10).join(" ") === "E11000 duplicate key error collection: hangman.users index: username_1 dup key:") {
                 setShowUsernameUniqueAlert(true);
             } else if (err.message.split(" ").slice(0, 10).join(" ") === "E11000 duplicate key error collection: hangman.users index: email_1 dup key:") {
