@@ -10,8 +10,12 @@ const Signup = () => {
     const [userFormData, setUserFormData] = useState({ email: "", username: "", password: "" });
     const [validated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
+    const [showEmailAlert, setShowEmailAlert] = useState(false);
+    const [showPasswordAlert, setShowPasswordAlert] = useState(false);
+    const [showUsernameUniqueAlert, setShowUsernameUniqueAlert] = useState(false);
+    const [showEmailUniqueAlert, setShowEmailUniqueAlert] = useState(false);
 
-    const [addUser, { error, data }] = useMutation(ADD_USER);
+    const [addUser] = useMutation(ADD_USER);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -20,6 +24,21 @@ const Signup = () => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+
+        setShowEmailAlert(false);
+        setShowPasswordAlert(false);
+        setShowUsernameUniqueAlert(false);
+        setShowEmailUniqueAlert(false);
+        setShowAlert(false);
+
+        if (!/.+@.+\..+/.test(e.target.email.value)) {
+            setShowEmailAlert(true);
+            return;
+        }
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.password.value)) {
+            setShowPasswordAlert(true);
+            return;
+        }
 
         const form = e.currentTarget;
         if (!form.checkValidity()) {
@@ -33,7 +52,13 @@ const Signup = () => {
             });
             Auth.login(data.addUser.token);
         } catch (err) {
-            console.log(err);
+            if (err.message.split(" ").slice(0, 10).join(" ") === "E11000 duplicate key error collection: hangman.users index: username_1 dup key:") {
+                setShowUsernameUniqueAlert(true);
+            } else if (err.message.split(" ").slice(0, 10).join(" ") === "E11000 duplicate key error collection: hangman.users index: email_1 dup key:") {
+                setShowEmailUniqueAlert(true);
+            } else {
+                setShowAlert(true);
+            }
         }
     };
 
@@ -41,11 +66,10 @@ const Signup = () => {
         <div className="signup-page">
             <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="container text-white d-flex justify-content-center">
                 <div className="signup-container p-5 col-12 col-md-6 col-lg-5">
-                    <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
-                        Something went wrong!
-                    </Alert>
                     <h3 className="mb-4">Sign Up</h3>
-
+                    <Alert dismissible onClose={() => setShowEmailAlert(false)} show={showEmailAlert} variant="danger">
+                        Enter a valid email address!
+                    </Alert>
                     <Form.Group className="mb-4">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
@@ -57,7 +81,9 @@ const Signup = () => {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
-                    
+                    <Alert dismissible onClose={() => setShowEmailUniqueAlert(false)} show={showEmailUniqueAlert} variant="danger">
+                        This email is already in use!
+                    </Alert>
                     <Form.Group className="mb-4">
                         <Form.Label>Username</Form.Label>
                         <Form.Control
@@ -69,7 +95,9 @@ const Signup = () => {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
-
+                    <Alert dismissible onClose={() => setShowUsernameUniqueAlert(false)} show={showUsernameUniqueAlert} variant="danger">
+                        This username is already taken!
+                    </Alert>
                     <Form.Group className="mb-3">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
@@ -81,6 +109,15 @@ const Signup = () => {
                             onChange={handleInputChange}
                         />
                     </Form.Group>
+                    <Alert dismissible onClose={() => setShowPasswordAlert(false)} show={showPasswordAlert} variant="danger">
+                        Password must:
+                        <li>Be at least 8 characters</li>
+                        <li>Contain at least 1 letter</li>
+                        <li>Contain at least 1 number</li>
+                    </Alert>
+                    <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
+                        Something went wrong!
+                    </Alert>
                     <Button type="submit" className="col-12 mt-3 mb-2 btn btn-primary btn-block">
                         Submit
                     </Button>
