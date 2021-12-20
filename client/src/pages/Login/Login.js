@@ -45,8 +45,7 @@ const Login = () => {
     };
 
     return (
-        <div className="login-page">
-            <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="container text-white d-flex justify-content-center">
+            <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="login-page container text-white d-flex justify-content-center">
                 <div className="signin-container p-5 col-11 col-md-6 col-lg-5">
                     <h3 className="mb-4">Sign In</h3>
 
@@ -90,7 +89,6 @@ const Login = () => {
                     </p>
                 </div>
             </Form>
-        </div>
     );
 };
 
