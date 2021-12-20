@@ -23,7 +23,7 @@ const NavBar = () => {
                     <p 
                         onClick={handleNavOpen}
                         style={{
-                            border: isActive ? "0" : "2px #333333 solid",
+                            border: isActive ? "0" : "2px white solid",
                             justifyContent: isActive ? "start" : "center",
                             margin: isActive ? "10px 0 0 24px" : "10px 0 0 10px",
                         }}

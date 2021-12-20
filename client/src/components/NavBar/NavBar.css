@@ -14,17 +14,25 @@ nav div {
 nav p {
     font-size: 1.5em;
     font-weight: 100;
-    color: #333333;
+    color: white;
     margin: 10px 0 0 10px;
     height: 50px;
     width: 50px;
     border-radius: 25px;
-    border: 2px #333333 solid;
+    border: 2px solid white;
     display: flex;
     justify-content: center;
     align-items: center;
     transition-property: border;
     transition-delay: 1s;
+}
+
+nav p:hover {
+    font-size: 1.6em;
+}
+
+nav i {
+    color: white;
 }
 
 #inner {
@@ -42,7 +50,7 @@ nav p {
 #inner li a {
     font-size: 1em;
     text-decoration: none;
-    color: #000000;
+    color: white;
     padding: 0 8px;
 }
 
