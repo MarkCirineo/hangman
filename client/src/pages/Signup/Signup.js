@@ -63,8 +63,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="signup-page">
-            <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="container text-white d-flex justify-content-center">
+            <Form noValidate validated={validated} onSubmit={handleFormSubmit} className="signup-page container text-white d-flex justify-content-center">
                 <div className="signup-container p-5 col-12 col-md-6 col-lg-5">
                     <h3 className="mb-4">Sign Up</h3>
                     <Alert dismissible onClose={() => setShowEmailAlert(false)} show={showEmailAlert} variant="danger">
@@ -126,7 +125,6 @@ const Signup = () => {
                     </p>
                 </div>
             </Form>
-        </div>
     )
 }
 
