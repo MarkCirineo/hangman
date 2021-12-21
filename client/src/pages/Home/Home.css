@@ -1,0 +1,23 @@
+.home {
+    position: fixed;
+    top: calc(50% - 60px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.home h1 {
+    font-size: 3.7rem;
+}
+
+.home-content a {
+    color: white;
+    text-decoration: none;
+}
+
+.home-content p {
+    background-color: rgb(54, 54, 54);
+    font-size: 2.1rem;
+    margin: 8px 0;
+    border-radius: 4px;
+    padding: 2px;
+}
