@@ -121,7 +121,7 @@ const Signup = () => {
                         Submit
                     </Button>
                     <p className="text-center mt-3">
-                        Already have an account? <Link to="/signup">Login</Link>
+                        Already have an account? <Link to="/login">Login</Link>
                     </p>
                 </div>
             </Form>
