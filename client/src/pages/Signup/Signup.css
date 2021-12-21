@@ -1,6 +1,8 @@
 .signup-page {
-    margin-top: 10%;
-    margin-bottom: 4%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .signup-container {
@@ -14,4 +16,13 @@
 
 .signup-page a:hover {
     color: rgb(226, 226, 255);
+}
+
+@media (max-width: 330px) {
+    .signup-page {
+        margin-top: 25px;
+    }
+    .signup-container {
+        padding: 35px 35px 25px 35px!important;
+    }
 }

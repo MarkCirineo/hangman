@@ -3,6 +3,8 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import Auth from "../../utils/auth";
+import { GET_ME } from "../../utils/queries";
+import { useQuery } from "@apollo/client";
 
 const NavBar = () => {
 
@@ -11,6 +13,13 @@ const NavBar = () => {
     const handleNavOpen = () => {
         setIsActive(!isActive);
     }
+
+    const { data } = useQuery(GET_ME);
+    const username = data?.me.username || ``;
+    const team = data?.me.team || ``;
+
+    const profileLink = `/user/${username}`;
+    const teamLink = `/team/${team}`;
 
     return (
         <>
@@ -23,7 +32,7 @@ const NavBar = () => {
                     <p 
                         onClick={handleNavOpen}
                         style={{
-                            border: isActive ? "0" : "2px #333333 solid",
+                            border: isActive ? "0" : "2px white solid",
                             justifyContent: isActive ? "start" : "center",
                             margin: isActive ? "10px 0 0 24px" : "10px 0 0 10px",
                         }}
@@ -36,12 +45,12 @@ const NavBar = () => {
                         }}
                     >
                         <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
-                        <li><Nav.Link as={Link} to="/">Team</Nav.Link></li>
+                        <li><Nav.Link as={Link} to={teamLink}>Team</Nav.Link></li>
                         <li><Nav.Link as={Link} to="/play">New Game</Nav.Link></li>
                         <li><Nav.Link as={Link} to="/leaderboard">Leaderboards</Nav.Link></li>
                         {Auth.loggedIn() ? (
                             <>
-                                <li><Nav.Link as={Link} to="/">Profile</Nav.Link></li>
+                                <li><Nav.Link as={Link} to={profileLink}>Profile</Nav.Link></li>
                                 <li><Nav.Link onClick={Auth.logout}>Logout</Nav.Link></li>
                             </>
                         ) : (
