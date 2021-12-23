@@ -11,8 +11,8 @@ const resolvers = {
             }
             throw new AuthenticationError("You must be logged in!");
         },
-        user: async (parent, { _id }) => {
-            const user = User.findOne({ _id });
+        user: async (parent, { username }) => {
+            const user = User.findOne({ username }).populate({ path: "members" });
             return user;
         },
         team: async (parent, { _id }) => {

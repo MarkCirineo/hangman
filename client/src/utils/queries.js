@@ -21,8 +21,8 @@ export const GET_ME = gql`
 `;
 
 export const GET_USER = gql`
-    query user($_id: ID!) {
-        user(_id: $_id) {
+    query user($username: String!) {
+        user(username: $username) {
             _id
             username
             wins
