@@ -10,3 +10,26 @@
     background-color: black;
     border: black;
 }
+
+.game ul {
+    list-style: none;
+    padding: 0;
+}
+
+.game li {
+    padding: 5px;
+    font-size: 28px;
+}
+
+.game li:hover {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.game li:active {
+    font-size: 26px;
+}
+
+.hide {
+    display: none;
+}
