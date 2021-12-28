@@ -21,5 +21,8 @@
     "bugs": {
         "url": "https://github.com/MarkCirineo/hangman/issues"
     },
-    "homepage": "https://github.com/MarkCirineo/hangman#readme"
+    "homepage": "https://github.com/MarkCirineo/hangman#readme",
+    "dependencies": {
+        "an-array-of-english-words": "^2.0.0"
+    }
 }
