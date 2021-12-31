@@ -21,17 +21,18 @@
     padding: 0;
 }
 
-.game li {
+.game .letter, .game .guessed {
     padding: 5px;
+    margin: 0 2px;
     font-size: 28px;
 }
 
-.game li:hover {
+.game .letter:hover {
     font-size: 30px;
     cursor: pointer;
 }
 
-.game li:active {
+.game .letter:active {
     font-size: 26px;
 }
 
