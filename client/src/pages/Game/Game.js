@@ -31,6 +31,14 @@ const Game = () => {
         setCurrentWord(getWord());
     }
 
+    const playAgain = () => {
+        const li = document.querySelectorAll(".hide");
+        li.forEach(li => {
+            li.classList.remove("hide");
+        })
+        startGame();
+    }
+
     const handleLetterClick = (e) => {
         const letter = e.target.textContent.toLowerCase();
         e.target.classList.add("hide");
@@ -74,6 +82,20 @@ const Game = () => {
                             ))}
                         </ul>
                     </div>
+                    {answerArrayState.includes("_") ? (
+                        <></>
+                    ) : (
+                        <div className="col-8" >
+                            <Button 
+                                className="col-8 col-md-3"
+                                onClick={playAgain}
+                            >
+                                Play Again
+                            </Button>
+                        </div>
+                    )}
+                    
+                    
                 </>
             ) : (
                 <Button 

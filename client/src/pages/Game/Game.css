@@ -11,6 +11,11 @@
     border: black;
 }
 
+.game button:hover {
+    color: black;
+    background-color: white;
+}
+
 .game ul {
     list-style: none;
     padding: 0;
