@@ -19,11 +19,11 @@ const Game = () => {
     }
 
     const [isPlaying, setIsPlaying] = useState(false);
-    // const [isWin, setIsWin] = useState(false);
-    // const [isLoss, setIsLoss] = useState(false);
     const [currentWord, setCurrentWord] = useState("");
     const [guesses, setGuesses] = useState([]);
     const [answerArrayState, setAnswerArrayState] = useState([]);
+    const [correctGuesses, setCorrectGuesses] = useState([]);
+    const [incorrectGuesses, setIncorrectGuesses] = useState([]);
 
     const startGame = () => {
         setIsPlaying(true);
@@ -32,7 +32,9 @@ const Game = () => {
     }
 
     const playAgain = () => {
-        const li = document.querySelectorAll(".hide");
+        const li = document.querySelectorAll(".letter");
+        setCorrectGuesses([]);
+        setIncorrectGuesses([]);
         li.forEach(li => {
             li.classList.remove("hide");
         })
@@ -50,6 +52,14 @@ const Game = () => {
                 answerArray[j] = letter;
             }
             setAnswerArrayState(answerArray);
+        }
+        if (answerArrayState.includes(letter)) {
+            setCorrectGuesses([...correctGuesses, letter]);
+        } else {
+            setIncorrectGuesses([...incorrectGuesses, letter]);
+        }
+        if (!answerArrayState.includes("_")) {
+            console.log("You win");
         }
     }
 
@@ -70,11 +80,12 @@ const Game = () => {
                             />
                         </h3>
                     </div>
-                    <div className="col-8">
+                    <div className="col-10">
                         <ul className="d-flex justify-content-center flex-wrap">
                             {letters.map((letter, i) => (
                                 <li
                                     key={i}
+                                    className="letter"
                                     onClick={handleLetterClick}
                                 >
                                     {letter}
@@ -94,8 +105,48 @@ const Game = () => {
                             </Button>
                         </div>
                     )}
-                    
-                    
+                    <div className="col-10 container d-flex justify-content-center">
+                        <div className="col-5">
+                            <h3>Correct Guesses</h3>
+                            <ul className="d-flex justify-content-center flex-wrap">
+                                {correctGuesses.length === 0 ? (
+                                    <p>-</p>
+                                ): (
+                                    <>
+                                    {correctGuesses.map((letter, i) => (
+                                        <li
+                                            key={i}
+                                            className="guessed"
+                                        >
+                                            {letter}
+                                        </li>
+                                    ))}
+                                    </>
+                                )}
+                                
+                            </ul>
+                        </div>
+                        <div className="col-5">
+                            <h3>Incorrect Guesses</h3>
+                            <ul className="d-flex justify-content-center flex-wrap">
+                                {incorrectGuesses.length === 0 ? (
+                                    <p>-</p>
+                                ): (
+                                    <>
+                                    {incorrectGuesses.map((letter, i) => (
+                                        <li
+                                            key={i}
+                                            className="guessed"
+                                        >
+                                            {letter}
+                                        </li>
+                                    ))}
+                                    </>
+                                )}
+                                
+                            </ul>
+                        </div>
+                    </div>
                 </>
             ) : (
                 <Button 
