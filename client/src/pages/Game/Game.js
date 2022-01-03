@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import words from "an-array-of-english-words";
 import "./Game.css";
@@ -24,11 +24,17 @@ const Game = () => {
     const [answerArrayState, setAnswerArrayState] = useState([]);
     const [correctGuesses, setCorrectGuesses] = useState([]);
     const [incorrectGuesses, setIncorrectGuesses] = useState([]);
+    const [remainingGuesses, setRemainingGuesses] = useState(6);
+    const [isWin, setIsWin] = useState(false);
+    const [isLoss, setIsLoss] = useState(false);
 
     const startGame = () => {
         setIsPlaying(true);
         setGuesses([]);
         setCurrentWord(getWord());
+        setIsWin(false);
+        setIsLoss(false);
+        setRemainingGuesses(6);
     }
 
     const playAgain = () => {
@@ -37,7 +43,7 @@ const Game = () => {
         setIncorrectGuesses([]);
         li.forEach(li => {
             li.classList.remove("hide");
-        })
+        });
         startGame();
     }
 
@@ -57,11 +63,30 @@ const Game = () => {
             setCorrectGuesses([...correctGuesses, letter]);
         } else {
             setIncorrectGuesses([...incorrectGuesses, letter]);
+            setRemainingGuesses(remainingGuesses - 1);
+        }
+    }
+
+    const checkResult = () => {
+        if (remainingGuesses === 0) {
+            console.log("You lose");
+            setIsLoss(true);
+            document.querySelectorAll(".letter").forEach(li => {
+                li.classList.add("hide");
+            });
         }
         if (!answerArrayState.includes("_")) {
             console.log("You win");
+            setIsWin(true);
+            document.querySelectorAll(".letter").forEach(li => {
+                li.classList.add("hide");
+            });
         }
     }
+
+    useEffect(() => {
+        checkResult();
+    });
 
     return (
         <div className="game container d-flex justify-content-center flex-wrap text-center">
@@ -93,25 +118,50 @@ const Game = () => {
                             ))}
                         </ul>
                     </div>
-                    {answerArrayState.includes("_") ? (
-                        <></>
-                    ) : (
-                        <div className="col-8" >
-                            <Button 
-                                className="col-8 col-md-3"
-                                onClick={playAgain}
-                            >
-                                Play Again
-                            </Button>
-                        </div>
-                    )}
+                    {(() => {
+                        if (isLoss) {
+                            return (
+                                <>
+                                    <div className="col-8 loss">
+                                        <h3><span>You lost!</span> The correct answer was <span>{currentWord}.</span></h3>
+                                    </div>
+                                    <div className="col-8 play-again" >
+                                        <Button 
+                                            className="col-8 col-md-3"
+                                            onClick={playAgain}
+                                        >
+                                            Play Again
+                                        </Button>
+                                    </div>
+                                </>
+                            )
+                        } else if (isWin) {
+                            return (
+                                <>
+                                    <div className="col-8 win">
+                                        <h3>You won!</h3>
+                                    </div>
+                                    <div className="col-8 play-again" >
+                                        <Button 
+                                            className="col-8 col-md-3"
+                                            onClick={playAgain}
+                                        >
+                                            Play Again
+                                        </Button>
+                                    </div>
+                                </>
+                            )
+                        } else {
+                            <></>
+                        }
+                    })()}
                     <div className="col-10 container d-flex justify-content-center">
-                        <div className="col-5">
+                        <div className="col-4 correct">
                             <h3>Correct Guesses</h3>
                             <ul className="d-flex justify-content-center flex-wrap">
                                 {correctGuesses.length === 0 ? (
                                     <p>-</p>
-                                ): (
+                                ) : (
                                     <>
                                     {correctGuesses.map((letter, i) => (
                                         <li
@@ -126,7 +176,11 @@ const Game = () => {
                                 
                             </ul>
                         </div>
-                        <div className="col-5">
+                        <div className="col-4">
+                            <h3>Remaining Guesses:</h3>
+                            <h3>{remainingGuesses}</h3>
+                        </div>
+                        <div className="col-4 incorrect">
                             <h3>Incorrect Guesses</h3>
                             <ul className="d-flex justify-content-center flex-wrap">
                                 {incorrectGuesses.length === 0 ? (
