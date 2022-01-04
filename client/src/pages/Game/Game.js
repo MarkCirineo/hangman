@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import words from "an-array-of-english-words";
 import "./Game.css";
 import Word from "../../components/Word/Word";
+import Diagram from "../../components/Diagram/Diagram";
 
 const Game = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -38,12 +39,12 @@ const Game = () => {
     }
 
     const playAgain = () => {
-        const li = document.querySelectorAll(".letter");
         setCorrectGuesses([]);
         setIncorrectGuesses([]);
-        li.forEach(li => {
+        document.querySelectorAll(".letter").forEach(li => {
             li.classList.remove("hide");
         });
+        document.querySelector(".letter-container").classList.remove("hide");
         startGame();
     }
 
@@ -71,16 +72,12 @@ const Game = () => {
         if (remainingGuesses === 0) {
             console.log("You lose");
             setIsLoss(true);
-            document.querySelectorAll(".letter").forEach(li => {
-                li.classList.add("hide");
-            });
+            document.querySelector(".letter-container")?.classList.add("hide");
         }
         if (!answerArrayState.includes("_")) {
             console.log("You win");
             setIsWin(true);
-            document.querySelectorAll(".letter").forEach(li => {
-                li.classList.add("hide");
-            });
+            document.querySelector(".letter-container")?.classList.add("hide");
         }
     }
 
@@ -95,8 +92,10 @@ const Game = () => {
                     <div className="col-8">
                         <h1>Guess the word</h1>
                     </div>
-                    <div className="col-8">
-                        <h2>*diagram*</h2>
+                    <div className="col-8 diagram-container">
+                        <Diagram 
+                            remainingGuesses={remainingGuesses}
+                        />
                     </div>
                     <div className="col-8">
                         <h3>
@@ -106,7 +105,7 @@ const Game = () => {
                         </h3>
                     </div>
                     <div className="col-10">
-                        <ul className="d-flex justify-content-center flex-wrap">
+                        <ul className="d-flex justify-content-center flex-wrap letter-container">
                             {letters.map((letter, i) => (
                                 <li
                                     key={i}
@@ -155,12 +154,12 @@ const Game = () => {
                             <></>
                         }
                     })()}
-                    <div className="col-10 container d-flex justify-content-center">
+                    <div className="col-12 container d-flex justify-content-center">
                         <div className="col-4 correct">
                             <h3>Correct Guesses</h3>
                             <ul className="d-flex justify-content-center flex-wrap">
                                 {correctGuesses.length === 0 ? (
-                                    <p>-</p>
+                                    <li className="hyphen">-</li>
                                 ) : (
                                     <>
                                     {correctGuesses.map((letter, i) => (
@@ -184,7 +183,7 @@ const Game = () => {
                             <h3>Incorrect Guesses</h3>
                             <ul className="d-flex justify-content-center flex-wrap">
                                 {incorrectGuesses.length === 0 ? (
-                                    <p>-</p>
+                                    <li className="hyphen">-</li>
                                 ): (
                                     <>
                                     {incorrectGuesses.map((letter, i) => (
@@ -210,8 +209,6 @@ const Game = () => {
                     Play
                 </Button>
             )}
-            
-            
         </div>
     )
 }
