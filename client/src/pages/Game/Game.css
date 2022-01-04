@@ -26,10 +26,11 @@
     margin: 0;
 }
 
-.game .letter, .game .guessed {
+.game .letter, .game .guessed, .game .hyphen {
     padding: 5px;
     margin: 0 2px;
     font-size: 28px;
+    height: 55px;
 }
 
 .game .letter:hover {
@@ -73,4 +74,8 @@
 
 .play-again {
     margin-bottom: 9px!important;
+}
+
+.diagram-container img {
+    height: 225px;
 }
