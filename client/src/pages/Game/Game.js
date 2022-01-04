@@ -4,6 +4,9 @@ import words from "an-array-of-english-words";
 import "./Game.css";
 import Word from "../../components/Word/Word";
 import Diagram from "../../components/Diagram/Diagram";
+import { useMutation } from "@apollo/client";
+import { LOSE, WIN } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 
 const Game = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -20,6 +23,7 @@ const Game = () => {
     }
 
     const [isPlaying, setIsPlaying] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
     const [currentWord, setCurrentWord] = useState("");
     const [guesses, setGuesses] = useState([]);
     const [answerArrayState, setAnswerArrayState] = useState([]);
@@ -36,6 +40,7 @@ const Game = () => {
         setIsWin(false);
         setIsLoss(false);
         setRemainingGuesses(6);
+        setGameOver(false);
     }
 
     const playAgain = () => {
@@ -68,16 +73,39 @@ const Game = () => {
         }
     }
 
+    const [addWin] = useMutation(WIN);
+    const [addLoss] = useMutation(LOSE);
+
+    const winMutation = async () => {
+        if (!Auth.loggedIn()) {
+            return;
+        }
+        await addWin();
+    }
+
+    const loseMutation = async () => {
+        if (!Auth.loggedIn()) {
+            return;
+        }
+        await addLoss();
+    }
+
     const checkResult = () => {
+        if (!isPlaying) { return; }
+        if (gameOver) { return; }
         if (remainingGuesses === 0) {
             console.log("You lose");
             setIsLoss(true);
             document.querySelector(".letter-container")?.classList.add("hide");
+            loseMutation();
+            setGameOver(true);
         }
         if (!answerArrayState.includes("_")) {
             console.log("You win");
             setIsWin(true);
             document.querySelector(".letter-container")?.classList.add("hide");
+            winMutation();
+            setGameOver(true);
         }
     }
 
