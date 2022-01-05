@@ -14,7 +14,7 @@ const Signup = () => {
     const [showPasswordAlert, setShowPasswordAlert] = useState(false);
     const [showUsernameUniqueAlert, setShowUsernameUniqueAlert] = useState(false);
     const [showEmailUniqueAlert, setShowEmailUniqueAlert] = useState(false);
-    const [showNotAllowUsername, setShowNotAllowedUsername] = useState(false);
+    const [showNotAllowedUsername, setShowNotAllowedUsername] = useState(false);
 
     const [addUser] = useMutation(ADD_USER);
 
@@ -104,7 +104,7 @@ const Signup = () => {
                     <Alert dismissible onClose={() => setShowUsernameUniqueAlert(false)} show={showUsernameUniqueAlert} variant="danger">
                         This username is already taken!
                     </Alert>
-                    <Alert dismissible onClose={() => setShowNotAllowedUsername(false)} show={showNotAllowUsername} variant="danger">
+                    <Alert dismissible onClose={() => setShowNotAllowedUsername(false)} show={showNotAllowedUsername} variant="danger">
                         This username is not allowed!
                     </Alert>
                     <Form.Group className="mb-3">
