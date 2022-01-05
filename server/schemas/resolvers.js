@@ -178,17 +178,19 @@ const resolvers = {
                         },
                     },
                 );
-                const updatedTeam = await Team.findOneAndUpdate(
-                    {
-                        _id: context.user.team._id
-                    },
-                    {
-                        $inc: {
-                            wins: 1,
-                            gamesPlayed: 1,
+                if (updatedUser.team) {
+                    const updatedTeam = await Team.findOneAndUpdate(
+                        {
+                            _id: context.user.team._id
                         },
-                    },
-                );
+                        {
+                            $inc: {
+                                wins: 1,
+                                gamesPlayed: 1,
+                            },
+                        },
+                    );
+                }
                 return updatedUser;
             }
             throw new AuthenticationError("You must be logged in");
@@ -205,18 +207,20 @@ const resolvers = {
                             gamesPlayed: 1,
                         },
                     },
-                );
-                const updatedTeam = await Team.findOneAndUpdate(
-                    {
-                        _id: context.user.team._id
-                    },
-                    {
-                        $inc: {
-                            losses: 1,
-                            gamesPlayed: 1,
+                )
+                if (updatedUser.team) { 
+                    const updatedTeam = await Team.findOneAndUpdate(
+                        {
+                            _id: context.user.team._id
                         },
-                    },
-                );
+                        {
+                            $inc: {
+                                losses: 1,
+                                gamesPlayed: 1,
+                            },
+                        },
+                    );
+                }
                 return updatedUser;
             }
             throw new AuthenticationError("You must be logged in");

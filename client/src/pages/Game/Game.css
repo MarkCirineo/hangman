@@ -1,0 +1,81 @@
+.game {
+    color: white;
+    position: fixed;
+    top: calc(50% - 60px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.game div {
+    margin: 2px 0;
+}
+
+.game button {
+    background-color: black;
+    border: black;
+}
+
+.game button:hover {
+    color: black;
+    background-color: white;
+}
+
+.game ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.game .letter, .game .guessed, .game .hyphen {
+    padding: 5px;
+    margin: 0 2px;
+    font-size: 28px;
+    height: 55px;
+}
+
+.game .letter:hover {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.game .letter:active {
+    font-size: 26px;
+}
+
+.hide {
+    display: none!important;
+}
+
+.letter-value {
+    padding: 0 4px;
+}
+
+.correct {
+    color: rgb(125, 255, 125);
+}
+
+.incorrect {
+    color: rgb(255, 123, 123);
+}
+
+.loss {
+    color: rgb(255, 123, 123);
+}
+
+.loss span {
+    font-weight: 700;
+    font-size: 2rem;
+    color: rgb(255, 94, 94)
+}
+
+.win {
+    color: rgb(125, 255, 125);
+}
+
+.play-again {
+    margin-bottom: 9px!important;
+}
+
+.diagram-container img {
+    height: 225px;
+}

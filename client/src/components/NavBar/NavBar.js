@@ -50,7 +50,7 @@ const NavBar = () => {
                         <li><Nav.Link as={Link} to="/leaderboard">Leaderboards</Nav.Link></li>
                         {Auth.loggedIn() ? (
                             <>
-                                <li><Nav.Link as={Link} to={profileLink}>Profile</Nav.Link></li>
+                                <li><a href={profileLink}>Profile</a></li>
                                 <li><Nav.Link onClick={Auth.logout}>Logout</Nav.Link></li>
                             </>
                         ) : (
