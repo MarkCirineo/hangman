@@ -14,6 +14,7 @@ const Signup = () => {
     const [showPasswordAlert, setShowPasswordAlert] = useState(false);
     const [showUsernameUniqueAlert, setShowUsernameUniqueAlert] = useState(false);
     const [showEmailUniqueAlert, setShowEmailUniqueAlert] = useState(false);
+    const [showNotAllowUsername, setShowNotAllowedUsername] = useState(false);
 
     const [addUser] = useMutation(ADD_USER);
 
@@ -30,6 +31,7 @@ const Signup = () => {
         setShowUsernameUniqueAlert(false);
         setShowEmailUniqueAlert(false);
         setShowAlert(false);
+        setShowNotAllowedUsername(false);
 
         if (!/.+@.+\..+/.test(e.target.email.value)) {
             setShowEmailAlert(true);
@@ -37,6 +39,11 @@ const Signup = () => {
         }
         if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.password.value)) {
             setShowPasswordAlert(true);
+            return;
+        }
+
+        if (/(?:(?:\b(?<![-=\.])|monka)(?:[Nnñ]|[Ii7]V)|[\/|]\\[\/|])[\s\.]*?[liI1y!j\/|]+[\s\.]*?(?:[GgbB6934Q🅱qğĜƃ၅5\*][\s\.]*?){2,}(?!arcS|l|Ktlw|ylul|ie217|64|\d? ?times)/.test(e.target.username.value)) {
+            setShowNotAllowedUsername(true);
             return;
         }
 
@@ -96,6 +103,9 @@ const Signup = () => {
                     </Form.Group>
                     <Alert dismissible onClose={() => setShowUsernameUniqueAlert(false)} show={showUsernameUniqueAlert} variant="danger">
                         This username is already taken!
+                    </Alert>
+                    <Alert dismissible onClose={() => setShowNotAllowedUsername(false)} show={showNotAllowUsername} variant="danger">
+                        This username is not allowed!
                     </Alert>
                     <Form.Group className="mb-3">
                         <Form.Label>Password</Form.Label>
