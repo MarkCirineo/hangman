@@ -37,7 +37,7 @@ const Signup = () => {
             setShowEmailAlert(true);
             return;
         }
-        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(e.target.password.value)) {
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(e.target.password.value)) {
             setShowPasswordAlert(true);
             return;
         }
@@ -123,6 +123,7 @@ const Signup = () => {
                         <li>Be at least 8 characters</li>
                         <li>Contain at least 1 letter</li>
                         <li>Contain at least 1 number</li>
+                        <li>Contain at least 1 special character - @$!%*#?&</li>
                     </Alert>
                     <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
                         Something went wrong!
