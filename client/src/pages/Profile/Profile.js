@@ -19,6 +19,7 @@ const Profile = () => {
     const { data: currentUser } = useQuery(GET_ME);
     const currentUserData = currentUser?.me || {};
 
+    const rating = (userData.wins / userData.gamesPlayed).toFixed(6); 
     return (
         <>       
         {data?.user === null ? (
@@ -42,7 +43,7 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
-                        <p>Rating: {userData.wins / userData.gamesPlayed}</p>
+                        <p>Rating: {rating === "NaN" ? "N/A" : rating}</p>
                     </div>
                     {userData.team === null ? (
                         <div>
@@ -76,7 +77,7 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
-                        <p>Rating: {userData.wins / userData.gamesPlayed}</p>
+                        <p>Rating: {rating === "NaN" ? "N/A" : rating}</p>
                     </div>
                     {userData.team === null ? (
                         <div>
