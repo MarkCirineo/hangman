@@ -6,25 +6,25 @@ const resolvers = {
     Query: {
         me: async (parent, _, context) => {
             if (context.user) {
-                const user = User.findOne({ _id: context.user._id })
+                const user = await User.findOne({ _id: context.user._id })
                 return user;
             }
             throw new AuthenticationError("You must be logged in!");
         },
         user: async (parent, { username }) => {
-            const user = User.findOne({ username }).populate({ path: "members" });
+            const user = await User.findOne({ username }).populate({ path: "members" });
             return user;
         },
         team: async (parent, { _id }) => {
-            const team = Team.findOne({ _id }).populate({ path: "members" });
+            const team = await Team.findOne({ _id }).populate({ path: "members" });
             return team;
         },
         users: async () => {
-            const users = User.find();
+            const users = await User.find();
             return users;
         },
         teams: async () => {
-            const teams = Team.find();
+            const teams = await Team.find();
             return teams;
         },
     },
@@ -167,6 +167,9 @@ const resolvers = {
         },
         win: async (parent, _, context) => {
             if (context.user) {
+                const user = await User.findOne({
+                    _id: context.user._id
+                });
                 const updatedUser = await User.findOneAndUpdate(
                     { 
                         _id: context.user._id 
@@ -176,6 +179,7 @@ const resolvers = {
                             wins: 1,
                             gamesPlayed: 1,
                         },
+                        rating: ((user.wins + 1) / (user.gamesPlayed + 1))
                     },
                 );
                 if (updatedUser.team) {
@@ -197,6 +201,9 @@ const resolvers = {
         },
         lose: async (parent, _, context) => {
             if (context.user) {
+                const user = await User.findOne({
+                    _id: context.user._id
+                });
                 const updatedUser = await User.findOneAndUpdate(
                     { 
                         _id: context.user._id 
@@ -206,6 +213,7 @@ const resolvers = {
                             losses: 1,
                             gamesPlayed: 1,
                         },
+                        rating: (user.wins / (user.gamesPlayed + 1))
                     },
                 )
                 if (updatedUser.team) { 

@@ -8,7 +8,7 @@ const typeDefs = gql`
         wins: Int!
         losses: Int!
         gamesPlayed: Int!
-        rating: Int!
+        rating: Float!
         team: Team
         createdAt: String
         updatedAt: String
