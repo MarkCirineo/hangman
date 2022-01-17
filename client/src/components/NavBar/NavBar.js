@@ -47,7 +47,7 @@ const NavBar = () => {
                         <li><Nav.Link as={Link} to="/">Home</Nav.Link></li>
                         <li><Nav.Link as={Link} to={teamLink}>Team</Nav.Link></li>
                         <li><Nav.Link as={Link} to="/play">New Game</Nav.Link></li>
-                        <li><Nav.Link as={Link} to="/leaderboard">Leaderboards</Nav.Link></li>
+                        <li><a href="/leaderboard">Leaderboards</a></li>
                         {Auth.loggedIn() ? (
                             <>
                                 <li><a href={profileLink}>Profile</a></li>
