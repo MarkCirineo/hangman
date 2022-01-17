@@ -1,14 +1,35 @@
 import { useQuery } from "@apollo/client";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { GET_USERS } from "../../utils/queries";
 import "./Leaderboard.css";
 
 const Leaderboard = () => {
 
-    const { data, loading } = useQuery(GET_USERS);
+    const { data } = useQuery(GET_USERS);
     const users = data?.users || [];
-    // console.log(loading);
-    // console.log(users);
+    const [sortConfig, setSortConfig] = useState({ key: "rating", direction: "descending" });
+    let sortedUsers = [...users];
+    useMemo(() => {
+        sortedUsers.sort((a, b) => {
+            if (a[sortConfig.key] < b[sortConfig.key]) {
+                return sortConfig.direction === "ascending" ? -1 : 1;
+            }
+            if (a[sortConfig.key] > b[sortConfig.key]) {
+                return sortConfig.direction === "ascending" ? 1 : -1;
+            }
+            return 0;
+        });
+        return sortedUsers;
+    }, [users, sortConfig]);
+
+    
+    const requestSort = (key) => {
+        let direction = "ascending";
+        if (sortConfig.key === key && sortConfig.direction === "ascending") {
+            direction = "descending";
+        }
+        setSortConfig({ key, direction });
+    }
 
     return (
         <>
@@ -18,24 +39,26 @@ const Leaderboard = () => {
                     <table className="col-12 container justify-content-around">
                         <thead>
                             <tr>
-                                <th className="tg-0lax">Name</th>
-                                <th className="tg-0lax">Wins</th>
-                                <th className="tg-0lax">Losses</th>
-                                <th className="tg-0lax">Rating</th>
-                                <th className="tg-0lax">Team</th>
+                                <th onClick={() => requestSort('username')}>Name</th>
+                                <th onClick={() => requestSort('wins')}>Wins</th>
+                                <th onClick={() => requestSort('losses')}>Losses</th>
+                                <th onClick={() => requestSort('gamesPlayed')}>Games Played</th>
+                                <th onClick={() => requestSort('rating')}>Rating</th>
+                                <th onClick={() => requestSort('team')}>Team</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user, i) => {
+                            {sortedUsers.map((user, i) => {
                                 const userLink = `/user/${user.username}`
                                 const rating = (user.wins / user.gamesPlayed).toFixed(6);
                                 return (
                                     <tr key={i}>
-                                        <td className="col-2 tg-0lax py-1"><a href={userLink}>{user.username}</a></td>
-                                        <td className="col-2 tg-0lax">{user.wins}</td>
-                                        <td className="col-2 tg-0lax">{user.losses}</td>
-                                        <td className="col-2 tg-0lax">{rating === "NaN" ? "N/A" : rating}</td>
-                                        <td className="col-2 tg-0lax">{user.team ? user.team : "N/A"}</td>
+                                        <td className="col-2 py-1"><a href={userLink}>{user.username}</a></td>
+                                        <td className="col-2">{user.wins}</td>
+                                        <td className="col-2">{user.losses}</td>
+                                        <td className="col-2">{user.gamesPlayed}</td>
+                                        <td className="col-2">{user.rating ? user.rating.toFixed(6) : user.rating}</td>
+                                        <td className="col-2">{user.team ? user.team : "N/A"}</td>
                                     </tr>
                                 )
                             })}
