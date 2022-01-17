@@ -15,3 +15,7 @@
 .leaderboard td {
     font-size: 1.1rem;
 }
+
+.leaderboard th {
+    cursor: pointer;
+}
