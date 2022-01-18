@@ -42,7 +42,7 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
-                        <p>Rating: {userData.wins / userData.gamesPlayed}</p>
+                        <p>Rating: {userData.rating ? userData.rating.toFixed(6) : userData.rating}</p>
                     </div>
                     {userData.team === null ? (
                         <div>
@@ -76,7 +76,7 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
-                        <p>Rating: {userData.wins / userData.gamesPlayed}</p>
+                        <p>Rating: {userData.rating ? userData.rating.toFixed(6) : userData.rating}</p>
                     </div>
                     {userData.team === null ? (
                         <div>

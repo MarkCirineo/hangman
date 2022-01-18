@@ -1,7 +1,22 @@
 .leaderboard {
     color: white;
-    position: fixed;
-    top: calc(50% - 60px);
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background-color: rgb(100, 100, 100);
+    border-radius: 5px;
+}
+
+.leaderboard a {
+    text-decoration: none;
+    color: white;
+}
+
+.leaderboard th {
+    font-size: 1.3rem;
+}
+
+.leaderboard td {
+    font-size: 1.1rem;
+}
+
+.leaderboard th {
+    cursor: pointer;
 }
