@@ -34,30 +34,29 @@ const Leaderboard = () => {
     return (
         <>
             <div className="leaderboard mt-4 py-2 container d-flex flex-wrap text-center justify-content-center">
-                <h1 className="col-8">Leaderboard</h1>
+                <h1 className="col-8 pt-1 pb-2">Leaderboard</h1>
                 <div className="col-10">
                     <table className="col-12 container justify-content-around">
                         <thead>
                             <tr>
-                                <th onClick={() => requestSort('username')}>Name</th>
-                                <th onClick={() => requestSort('wins')}>Wins</th>
-                                <th onClick={() => requestSort('losses')}>Losses</th>
-                                <th onClick={() => requestSort('gamesPlayed')}>Games Played</th>
-                                <th onClick={() => requestSort('rating')}>Rating</th>
-                                <th onClick={() => requestSort('team')}>Team</th>
+                                <th onClick={() => requestSort("username")}>Name</th>
+                                <th onClick={() => requestSort("wins")}>Wins</th>
+                                <th onClick={() => requestSort("losses")}>Losses</th>
+                                <th onClick={() => requestSort("gamesPlayed")}>Games Played</th>
+                                <th onClick={() => requestSort("rating")}>Rating</th>
+                                <th onClick={() => requestSort("team")}>Team</th>
                             </tr>
                         </thead>
                         <tbody>
                             {sortedUsers.map((user, i) => {
-                                const userLink = `/user/${user.username}`
-                                const rating = (user.wins / user.gamesPlayed).toFixed(6);
+                                const userLink = `/user/${user.username}`;
                                 return (
                                     <tr key={i}>
                                         <td className="col-2 py-1"><a href={userLink}>{user.username}</a></td>
                                         <td className="col-2">{user.wins}</td>
                                         <td className="col-2">{user.losses}</td>
                                         <td className="col-2">{user.gamesPlayed}</td>
-                                        <td className="col-2">{user.rating ? user.rating.toFixed(6) : user.rating}</td>
+                                        <td className="col-2">{user.rating ? user.rating.toFixed(4) : user.rating}</td>
                                         <td className="col-2">{user.team ? user.team : "N/A"}</td>
                                     </tr>
                                 )
