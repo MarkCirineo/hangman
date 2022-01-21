@@ -30,6 +30,14 @@ const userSchema = new Schema(
             type: Number,
             default: 0
         },
+        winLosePercentage: {
+            type: Number,
+            default: 0
+        },
+        points: {
+            type: Number,
+            default: 0
+        },
         rating: {
             type: Number,
             default: 0
