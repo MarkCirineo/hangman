@@ -11,9 +11,25 @@ import Auth from "../../utils/auth";
 const Game = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-    const getWord = () => {
-        const i = Math.floor(Math.random() * words.length);
-        const randomWord = words[i];
+    const getWord = (d) => {
+        let wordArray = [];
+        switch (d) {
+            case "easy":
+                wordArray = words.filter(word => word.length < 6);
+                break;
+            case "standard":
+                wordArray = words;
+                break;
+            case "hard":
+                wordArray = words.filter(word => word.length > 6);
+                break;
+            default:
+                break;
+        }
+
+        const i = Math.floor(Math.random() * wordArray.length);
+        const randomWord = wordArray[i];
+
         let answerArray = [];
         for (let i = 0; i < randomWord.length; i++) {
             answerArray[i] = "_"
@@ -32,14 +48,41 @@ const Game = () => {
     const [remainingGuesses, setRemainingGuesses] = useState(6);
     const [isWin, setIsWin] = useState(false);
     const [isLoss, setIsLoss] = useState(false);
+    const [difficulty, setDifficulty] = useState("");
+
+    const startEasy = () => {
+        setRemainingGuesses(7);
+        setCurrentWord(getWord("easy"));
+        setDifficulty("easy");
+        startGame();
+    }
+
+    const startStandard = () => {
+        setRemainingGuesses(6);
+        setCurrentWord(getWord("standard"));
+        setDifficulty("standard");
+        startGame();
+    }
+
+    const startHard = () => {
+        setRemainingGuesses(5);
+        setCurrentWord(getWord("hard"));
+        setDifficulty("hard");
+        startGame();
+    }
 
     const startGame = () => {
+        setCorrectGuesses([]);
+        setIncorrectGuesses([]);
+        document.querySelectorAll(".letter")?.forEach(li => {
+            li.classList.remove("hide");
+        });
+        document.querySelector(".letter-container")?.classList.remove("hide");
+
         setIsPlaying(true);
         setGuesses([]);
-        setCurrentWord(getWord());
         setIsWin(false);
         setIsLoss(false);
-        setRemainingGuesses(6);
         setGameOver(false);
     }
 
@@ -50,7 +93,19 @@ const Game = () => {
             li.classList.remove("hide");
         });
         document.querySelector(".letter-container").classList.remove("hide");
-        startGame();
+        switch (difficulty) {
+            case "easy":
+                startEasy();
+                break;
+            case "standard":
+                startStandard();
+                break;
+            case "hard":
+                startHard();
+                break;
+            default:
+                break;
+        }
     }
 
     const handleLetterClick = (e) => {
@@ -152,12 +207,18 @@ const Game = () => {
                                     <div className="col-8 loss">
                                         <h3><span>You lost!</span> The correct answer was <span>{currentWord}.</span></h3>
                                     </div>
-                                    <div className="col-8 play-again" >
+                                    <div className="col-6 play-again d-flex justify-content-evenly">
                                         <Button 
-                                            className="col-8 col-md-3"
+                                            className="col-6 mx-1 col-md-4"
                                             onClick={playAgain}
                                         >
                                             Play Again
+                                        </Button>
+                                        <Button 
+                                            className="col-6 mx-1 col-md-4"
+                                            onClick={() => {setIsPlaying(false)}}
+                                        >
+                                            Change Difficulty
                                         </Button>
                                     </div>
                                 </>
@@ -168,12 +229,18 @@ const Game = () => {
                                     <div className="col-8 win">
                                         <h3>You won!</h3>
                                     </div>
-                                    <div className="col-8 play-again" >
+                                    <div className="col-6 play-again d-flex justify-content-evenly">
                                         <Button 
-                                            className="col-8 col-md-3"
+                                            className="col-6 mx-1 col-md-4"
                                             onClick={playAgain}
                                         >
                                             Play Again
+                                        </Button>
+                                        <Button 
+                                            className="col-4 col-md-3"
+                                            onClick={setIsPlaying(false)}
+                                        >
+                                            Change Difficulty
                                         </Button>
                                     </div>
                                 </>
@@ -230,12 +297,37 @@ const Game = () => {
                     </div>
                 </>
             ) : (
-                <Button 
-                    className="col-4 col-md-1"
-                    onClick={startGame}
-                >
-                    Play
-                </Button>
+                <div className="container d-flex flex-wrap justify-content-center">
+                    <h1 className="col-10">Select Difficulty</h1>
+                    <div className="col-8 justify-content-evenly d-flex">
+                        <Button 
+                            className="col-4 col-md-2"
+                            onClick={() => {
+                                startEasy();
+                                // setRemainingGuesses(7);
+                                // startGame();
+                            }}
+                        >
+                            Easy
+                        </Button>
+                        <Button 
+                            className="col-4 col-md-2"
+                            onClick={() => {
+                                startStandard();
+                            }}
+                        >
+                            Standard
+                        </Button>
+                        <Button 
+                            className="col-4 col-md-2"
+                            onClick={() => {
+                                startHard();
+                            }}
+                        >
+                            Hard
+                        </Button>
+                    </div>
+                </div>
             )}
         </div>
     )
