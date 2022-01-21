@@ -1,4 +1,5 @@
 import React from "react";
+import diagram0 from "../../img/diagram0.png";
 import diagram1 from "../../img/diagram1.png";
 import diagram2 from "../../img/diagram2.png";
 import diagram3 from "../../img/diagram3.png";
@@ -11,7 +12,11 @@ const Diagram = (props) => {
     return (
         <>
             {(() => {
-                if (props.remainingGuesses === 6) {
+                if (props.remainingGuesses === 7) {
+                    return (
+                        <img alt="Empty hangman diagram" src={diagram0}/>
+                    )
+                } else if (props.remainingGuesses === 6) {
                     return (
                         <img alt="Empty hangman diagram" src={diagram1}/>
                     )
