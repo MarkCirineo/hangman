@@ -8,6 +8,8 @@ const typeDefs = gql`
         wins: Int!
         losses: Int!
         gamesPlayed: Int!
+        winLosePercentage: Float!
+        points: Int!
         rating: Float!
         team: Team
         createdAt: String
@@ -49,7 +51,7 @@ const typeDefs = gql`
         joinTeam(_id: ID!): Team
         leaveTeam(_id: ID!): Team
         deleteTeam(_id: ID!): Team
-        win: User
+        win(points: Int!): User
         lose: User
     }
 `;

@@ -165,7 +165,7 @@ const resolvers = {
             }
             throw new AuthenticationError("You must be logged in");
         },
-        win: async (parent, _, context) => {
+        win: async (parent, { points }, context) => {
             if (context.user) {
                 const user = await User.findOne({
                     _id: context.user._id
@@ -178,8 +178,10 @@ const resolvers = {
                         $inc: {
                             wins: 1,
                             gamesPlayed: 1,
+                            points
                         },
-                        rating: ((user.wins + 1) / (user.gamesPlayed + 1))
+                        winLosePercentage: ((user.wins + 1) / (user.gamesPlayed + 1)),
+                        rating: ((user.points + points) / (user.gamesPlayed + 1))
                     },
                 );
                 if (updatedUser.team) {
@@ -213,7 +215,8 @@ const resolvers = {
                             losses: 1,
                             gamesPlayed: 1,
                         },
-                        rating: (user.wins / (user.gamesPlayed + 1))
+                        winLosePercentage: (user.wins / (user.gamesPlayed + 1)),
+                        rating: (user.points / (user.gamesPlayed + 1))
                     },
                 )
                 if (updatedUser.team) { 
