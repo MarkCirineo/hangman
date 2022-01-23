@@ -70,8 +70,8 @@ export const DELETE_TEAM = gql`
 `;
 
 export const WIN = gql`
-    mutation win {
-        win {
+    mutation win($points: Int!) {
+        win(points: $points) {
             _id 
             username 
             wins
