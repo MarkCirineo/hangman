@@ -135,7 +135,24 @@ const Game = () => {
         if (!Auth.loggedIn()) {
             return;
         }
-        await addWin();
+        let points = 0;
+        switch (difficulty) {
+            case "easy":
+                points = 1;
+                break;
+            case "standard":
+                points = 2;
+                break;
+            case "hard":
+                points = 3;
+                break;
+            default:
+                break;
+        }
+        await addWin({
+            variables: { points }
+        });
+        console.log(isPlaying);
     }
 
     const loseMutation = async () => {
@@ -237,8 +254,8 @@ const Game = () => {
                                             Play Again
                                         </Button>
                                         <Button 
-                                            className="col-4 col-md-3"
-                                            onClick={setIsPlaying(false)}
+                                            className="col-6 mx-1 col-md-4"
+                                            onClick={() => {setIsPlaying(false)}}
                                         >
                                             Change Difficulty
                                         </Button>
@@ -299,30 +316,22 @@ const Game = () => {
             ) : (
                 <div className="container d-flex flex-wrap justify-content-center">
                     <h1 className="col-10">Select Difficulty</h1>
-                    <div className="col-8 justify-content-evenly d-flex">
+                    <div className="col-8 pt-3 justify-content-evenly d-flex">
                         <Button 
                             className="col-4 col-md-2"
-                            onClick={() => {
-                                startEasy();
-                                // setRemainingGuesses(7);
-                                // startGame();
-                            }}
+                            onClick={startEasy}
                         >
                             Easy
                         </Button>
                         <Button 
                             className="col-4 col-md-2"
-                            onClick={() => {
-                                startStandard();
-                            }}
+                            onClick={startStandard}
                         >
                             Standard
                         </Button>
                         <Button 
                             className="col-4 col-md-2"
-                            onClick={() => {
-                                startHard();
-                            }}
+                            onClick={startHard}
                         >
                             Hard
                         </Button>
