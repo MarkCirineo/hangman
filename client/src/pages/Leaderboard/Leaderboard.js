@@ -43,6 +43,8 @@ const Leaderboard = () => {
                                 <th onClick={() => requestSort("wins")}>Wins</th>
                                 <th onClick={() => requestSort("losses")}>Losses</th>
                                 <th onClick={() => requestSort("gamesPlayed")}>Games Played</th>
+                                <th onClick={() => requestSort("winLosePercentage")}>Win Rate</th>
+                                <th onClick={() => requestSort("points")}>Points</th>
                                 <th onClick={() => requestSort("rating")}>Rating</th>
                                 <th onClick={() => requestSort("team")}>Team</th>
                             </tr>
@@ -52,12 +54,14 @@ const Leaderboard = () => {
                                 const userLink = `/user/${user.username}`;
                                 return (
                                     <tr key={i}>
-                                        <td className="col-2 py-1"><a href={userLink}>{user.username}</a></td>
-                                        <td className="col-2">{user.wins}</td>
-                                        <td className="col-2">{user.losses}</td>
-                                        <td className="col-2">{user.gamesPlayed}</td>
-                                        <td className="col-2">{user.rating ? user.rating.toFixed(4) : user.rating}</td>
-                                        <td className="col-2">{user.team ? user.team : "N/A"}</td>
+                                        <td className="col-1 py-1"><a href={userLink}>{user.username}</a></td>
+                                        <td className="col-1">{user.wins}</td>
+                                        <td className="col-1">{user.losses}</td>
+                                        <td className="col-1">{user.gamesPlayed}</td>
+                                        <td className="col-1">{user.winLosePercentage ? user.winLosePercentage.toFixed(3) * 100 : user.winLosePercentage}%</td>
+                                        <td className="col-1">{user.points}</td>
+                                        <td className="col-1">{user.rating ? user.rating.toFixed(4) : user.rating}</td>
+                                        <td className="col-1">{user.team ? user.team : "N/A"}</td>
                                     </tr>
                                 )
                             })}

@@ -9,6 +9,8 @@ export const GET_ME = gql`
             wins
             losses
             gamesPlayed
+            winLosePercentage
+            points
             rating
             team {
                 _id
@@ -28,6 +30,8 @@ export const GET_USER = gql`
             wins
             losses
             gamesPlayed
+            winLosePercentage
+            points
             rating
             team {
                 _id
@@ -47,6 +51,8 @@ export const GET_USERS = gql`
             wins
             losses
             gamesPlayed
+            winLosePercentage
+            points
             rating
             team {
                 _id 

@@ -42,6 +42,12 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
+                        <p>Win Rate: {userData.winLosePercentage ? userData.winLosePercentage.toFixed(4) * 100 : userData.winLosePercentage}%</p>
+                    </div>
+                    <div className="col-10">
+                        <p>Points: {userData.points}</p>
+                    </div>
+                    <div className="col-10">
                         <p>Rating: {userData.rating ? userData.rating.toFixed(6) : userData.rating}</p>
                     </div>
                     {userData.team === null ? (
@@ -74,6 +80,12 @@ const Profile = () => {
                     </div>
                     <div className="col-10">
                         <p>Games Played: {userData.gamesPlayed}</p>
+                    </div>
+                    <div className="col-10">
+                        <p>Win Rate: {userData.winLosePercentage ? userData.winLosePercentage.toFixed(4) * 100 : userData.winLosePercentage}%</p>
+                    </div>
+                    <div className="col-10">
+                        <p>Points: {userData.points}</p>
                     </div>
                     <div className="col-10">
                         <p>Rating: {userData.rating ? userData.rating.toFixed(6) : userData.rating}</p>
