@@ -42,7 +42,7 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
-                        <p>Win/Lose Percentage: {userData.winLosePercentage ? userData.winLosePercentage.toFixed(3) : userData.winLosePercentage}%</p>
+                        <p>Win Rate: {userData.winLosePercentage ? userData.winLosePercentage.toFixed(4) * 100 : userData.winLosePercentage}%</p>
                     </div>
                     <div className="col-10">
                         <p>Points: {userData.points}</p>
@@ -82,7 +82,7 @@ const Profile = () => {
                         <p>Games Played: {userData.gamesPlayed}</p>
                     </div>
                     <div className="col-10">
-                        <p>Win/Loss Percentage: {userData.winLosePercentage ? userData.winLosePercentage.toFixed(3) : userData.winLosePercentage}%</p>
+                        <p>Win Rate: {userData.winLosePercentage ? userData.winLosePercentage.toFixed(4) * 100 : userData.winLosePercentage}%</p>
                     </div>
                     <div className="col-10">
                         <p>Points: {userData.points}</p>
