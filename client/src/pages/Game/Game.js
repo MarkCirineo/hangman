@@ -15,13 +15,13 @@ const Game = () => {
         let wordArray = [];
         switch (d) {
             case "easy":
-                wordArray = words.filter(word => word.length < 6);
+                wordArray = words.filter(word => word.length > 6);
                 break;
             case "standard":
                 wordArray = words;
                 break;
             case "hard":
-                wordArray = words.filter(word => word.length > 6);
+                wordArray = words.filter(word => word.length < 6);
                 break;
             default:
                 break;
