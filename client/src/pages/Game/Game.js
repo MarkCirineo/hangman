@@ -38,6 +38,26 @@ const Game = () => {
         return randomWord;
     }
 
+    const getMovie = async () => {
+        const movieData = await (await fetch(`https://k2maan-moviehut.herokuapp.com/api/random`)).json();
+        const movie = movieData.name;
+        // let disallowedRegex = new RegExp(/[0-9$&+,:;=?@#|'<>.^*()%!-]/);
+        let alphabetRegex = new RegExp(/[A-Za-z]/)
+    
+        let answerArray = [];
+        for (let i = 0; i < movie.length; i++) {
+            if (!movie[i].match(alphabetRegex)) {
+                answerArray[i] = movie[i];
+            } else if (movie[i] === " ") {
+                answerArray[i] = " ";
+            } else {
+                answerArray[i] = "_"
+            }
+        }
+        setAnswerArrayState(answerArray);
+        return movie;
+    }
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [currentWord, setCurrentWord] = useState("");
@@ -49,11 +69,13 @@ const Game = () => {
     const [isWin, setIsWin] = useState(false);
     const [isLoss, setIsLoss] = useState(false);
     const [difficulty, setDifficulty] = useState("");
+    const [category, setCategory] = useState("");
 
     const startEasy = () => {
         setRemainingGuesses(7);
         setCurrentWord(getWord("easy"));
         setDifficulty("easy");
+        setCategory("");
         startGame();
     }
 
@@ -61,6 +83,7 @@ const Game = () => {
         setRemainingGuesses(6);
         setCurrentWord(getWord("standard"));
         setDifficulty("standard");
+        setCategory("");
         startGame();
     }
 
@@ -68,6 +91,15 @@ const Game = () => {
         setRemainingGuesses(5);
         setCurrentWord(getWord("hard"));
         setDifficulty("hard");
+        setCategory("");
+        startGame();
+    }
+
+    const startMovie = async () => {
+        setRemainingGuesses(6);
+        setCurrentWord(await getMovie());
+        setDifficulty("standard");
+        setCategory("movie");
         startGame();
     }
 
@@ -93,6 +125,15 @@ const Game = () => {
             li.classList.remove("hide");
         });
         document.querySelector(".letter-container").classList.remove("hide");
+        if (category) {
+            switch (category) {
+                case "movie":
+                    startMovie();
+                    break;
+                default:
+                    break;
+            }
+        }
         switch (difficulty) {
             case "easy":
                 startEasy();
@@ -115,12 +156,12 @@ const Game = () => {
         // console.log(currentWord);
         let answerArray = answerArrayState;
         for (let j = 0; j < currentWord.length; j++) {
-            if (currentWord[j] === letter) {
+            if (currentWord[j] === letter || currentWord[j] === letter.toUpperCase()) {
                 answerArray[j] = letter;
             }
             setAnswerArrayState(answerArray);
         }
-        if (answerArrayState.includes(letter)) {
+        if (answerArrayState.includes(letter) || answerArrayState.includes(letter.toUpperCase())) {
             setCorrectGuesses([...correctGuesses, letter]);
         } else {
             setIncorrectGuesses([...incorrectGuesses, letter]);
@@ -152,7 +193,7 @@ const Game = () => {
         await addWin({
             variables: { points }
         });
-        console.log(isPlaying);
+        // console.log(isPlaying);
     }
 
     const loseMutation = async () => {
@@ -315,25 +356,35 @@ const Game = () => {
                 </>
             ) : (
                 <div className="container d-flex flex-wrap justify-content-center">
-                    <h1 className="col-10">Select Difficulty</h1>
-                    <div className="col-8 pt-3 justify-content-evenly d-flex">
+                    <h1 className="col-10">Select a Difficulty</h1>
+                    <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
                         <Button 
-                            className="col-4 col-md-2"
+                            className="col-3 col-md-3 col-lg-2"
                             onClick={startEasy}
                         >
                             Easy
                         </Button>
                         <Button 
-                            className="col-4 col-md-2"
+                            className="col-3 col-md-3 col-lg-2"
                             onClick={startStandard}
                         >
                             Standard
                         </Button>
                         <Button 
-                            className="col-4 col-md-2"
+                            className="col-3 col-md-3 col-lg-2"
                             onClick={startHard}
                         >
                             Hard
+                        </Button>
+                    </div>
+                    <h2 className="col-10 pt-3">Or</h2>
+                    <h1 className="col-10">Choose a Category</h1>
+                    <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
+                        <Button 
+                                className="col-3 col-md-3 col-lg-2"
+                                onClick={startMovie}
+                            >
+                                Movie Titles
                         </Button>
                     </div>
                 </div>
