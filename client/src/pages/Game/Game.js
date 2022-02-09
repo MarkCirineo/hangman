@@ -7,6 +7,7 @@ import Diagram from "../../components/Diagram/Diagram";
 import { useMutation } from "@apollo/client";
 import { LOSE, WIN } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import countries from "../../utils/countries.json";
 
 const Game = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -42,7 +43,7 @@ const Game = () => {
         const movieData = await (await fetch(`https://k2maan-moviehut.herokuapp.com/api/random`)).json();
         const movie = movieData.name;
         // let disallowedRegex = new RegExp(/[0-9$&+,:;=?@#|'<>.^*()%!-]/);
-        let alphabetRegex = new RegExp(/[A-Za-z]/)
+        let alphabetRegex = new RegExp(/[A-Za-z]/);
     
         let answerArray = [];
         for (let i = 0; i < movie.length; i++) {
@@ -51,11 +52,31 @@ const Game = () => {
             } else if (movie[i] === " ") {
                 answerArray[i] = " ";
             } else {
-                answerArray[i] = "_"
+                answerArray[i] = "_";
+            }
+        }
+        setWaitingForMovie(false);
+        setAnswerArrayState(answerArray);
+        return movie;
+    }
+
+    const getCountry = () => {
+        const i = Math.floor(Math.random() * countries.length);
+        const country = countries[i];
+        let alphabetRegex = new RegExp(/[A-Za-z]/);
+
+        let answerArray = [];
+        for (let i = 0; i < country.length; i++) {
+            if (!country[i].match(alphabetRegex)) {
+                answerArray[i] = country[i];
+            } else if (country[i] === " ") {
+                answerArray[i] = " ";
+            } else {
+                answerArray[i] = "_";
             }
         }
         setAnswerArrayState(answerArray);
-        return movie;
+        return country;
     }
 
     const [isPlaying, setIsPlaying] = useState(false);
@@ -70,6 +91,7 @@ const Game = () => {
     const [isLoss, setIsLoss] = useState(false);
     const [difficulty, setDifficulty] = useState("");
     const [category, setCategory] = useState("");
+    const [waitingForMovie, setWaitingForMovie] = useState(false);
 
     const startEasy = () => {
         setRemainingGuesses(7);
@@ -97,9 +119,18 @@ const Game = () => {
 
     const startMovie = async () => {
         setRemainingGuesses(6);
+        setWaitingForMovie(true);
         setCurrentWord(await getMovie());
         setDifficulty("standard");
         setCategory("movie");
+        startGame();
+    }
+
+    const startCountry = () => {
+        setRemainingGuesses(6);
+        setCurrentWord(getCountry());
+        setDifficulty("standard");
+        setCategory("country");
         startGame();
     }
 
@@ -130,22 +161,26 @@ const Game = () => {
                 case "movie":
                     startMovie();
                     break;
+                case "country":
+                    startCountry();
+                    break;
                 default:
                     break;
             }
-        }
-        switch (difficulty) {
-            case "easy":
-                startEasy();
-                break;
-            case "standard":
-                startStandard();
-                break;
-            case "hard":
-                startHard();
-                break;
-            default:
-                break;
+        } else {
+            switch (difficulty) {
+                case "easy":
+                    startEasy();
+                    break;
+                case "standard":
+                    startStandard();
+                    break;
+                case "hard":
+                    startHard();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -355,39 +390,51 @@ const Game = () => {
                     </div>
                 </>
             ) : (
-                <div className="container d-flex flex-wrap justify-content-center">
-                    <h1 className="col-10">Select a Difficulty</h1>
-                    <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
-                        <Button 
-                            className="col-3 col-md-3 col-lg-2"
-                            onClick={startEasy}
-                        >
-                            Easy
-                        </Button>
-                        <Button 
-                            className="col-3 col-md-3 col-lg-2"
-                            onClick={startStandard}
-                        >
-                            Standard
-                        </Button>
-                        <Button 
-                            className="col-3 col-md-3 col-lg-2"
-                            onClick={startHard}
-                        >
-                            Hard
-                        </Button>
-                    </div>
-                    <h2 className="col-10 pt-3">Or</h2>
-                    <h1 className="col-10">Choose a Category</h1>
-                    <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
-                        <Button 
+                <>
+                {waitingForMovie ? (
+                    <h2>Loading...</h2>
+                ) : (
+                    <div className="container d-flex flex-wrap justify-content-center">
+                        <h1 className="col-10">Select a Difficulty</h1>
+                        <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
+                            <Button 
                                 className="col-3 col-md-3 col-lg-2"
-                                onClick={startMovie}
+                                onClick={startEasy}
                             >
-                                Movie Titles
-                        </Button>
+                                Easy
+                            </Button>
+                            <Button 
+                                className="col-3 col-md-3 col-lg-2"
+                                onClick={startStandard}
+                            >
+                                Standard
+                            </Button>
+                            <Button 
+                                className="col-3 col-md-3 col-lg-2"
+                                onClick={startHard}
+                            >
+                                Hard
+                            </Button>
+                        </div>
+                        <h2 className="col-10 pt-3">Or</h2>
+                        <h1 className="col-10">Choose a Category</h1>
+                        <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
+                            <Button 
+                                    className="col-3 col-md-3 col-lg-2"
+                                    onClick={startMovie}
+                                >
+                                    Movie Titles
+                            </Button>
+                            <Button 
+                                    className="col-3 col-md-3 col-lg-2"
+                                    onClick={startCountry}
+                                >
+                                    Country Names
+                            </Button>
+                        </div>
                     </div>
-                </div>
+                )}  
+                </>
             )}
         </div>
     )
