@@ -7,6 +7,7 @@ import Diagram from "../../components/Diagram/Diagram";
 import { useMutation } from "@apollo/client";
 import { LOSE, WIN } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import countries from "../../utils/countries.json";
 
 const Game = () => {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -42,7 +43,7 @@ const Game = () => {
         const movieData = await (await fetch(`https://k2maan-moviehut.herokuapp.com/api/random`)).json();
         const movie = movieData.name;
         // let disallowedRegex = new RegExp(/[0-9$&+,:;=?@#|'<>.^*()%!-]/);
-        let alphabetRegex = new RegExp(/[A-Za-z]/)
+        let alphabetRegex = new RegExp(/[A-Za-z]/);
     
         let answerArray = [];
         for (let i = 0; i < movie.length; i++) {
@@ -51,11 +52,30 @@ const Game = () => {
             } else if (movie[i] === " ") {
                 answerArray[i] = " ";
             } else {
-                answerArray[i] = "_"
+                answerArray[i] = "_";
             }
         }
         setAnswerArrayState(answerArray);
         return movie;
+    }
+
+    const getCountry = () => {
+        const i = Math.floor(Math.random() * countries.length);
+        const country = countries[i];
+        let alphabetRegex = new RegExp(/[A-Za-z]/);
+
+        let answerArray = [];
+        for (let i = 0; i < country.length; i++) {
+            if (!country[i].match(alphabetRegex)) {
+                answerArray[i] = country[i];
+            } else if (country[i] === " ") {
+                answerArray[i] = " ";
+            } else {
+                answerArray[i] = "_";
+            }
+        }
+        setAnswerArrayState(answerArray);
+        return country;
     }
 
     const [isPlaying, setIsPlaying] = useState(false);
@@ -103,6 +123,14 @@ const Game = () => {
         startGame();
     }
 
+    const startCountry = () => {
+        setRemainingGuesses(6);
+        setCurrentWord(getCountry());
+        setDifficulty("standard");
+        setCategory("country");
+        startGame();
+    }
+
     const startGame = () => {
         setCorrectGuesses([]);
         setIncorrectGuesses([]);
@@ -130,22 +158,26 @@ const Game = () => {
                 case "movie":
                     startMovie();
                     break;
+                case "country":
+                    startCountry();
+                    break;
                 default:
                     break;
             }
-        }
-        switch (difficulty) {
-            case "easy":
-                startEasy();
-                break;
-            case "standard":
-                startStandard();
-                break;
-            case "hard":
-                startHard();
-                break;
-            default:
-                break;
+        } else {
+            switch (difficulty) {
+                case "easy":
+                    startEasy();
+                    break;
+                case "standard":
+                    startStandard();
+                    break;
+                case "hard":
+                    startHard();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -385,6 +417,12 @@ const Game = () => {
                                 onClick={startMovie}
                             >
                                 Movie Titles
+                        </Button>
+                        <Button 
+                                className="col-3 col-md-3 col-lg-2"
+                                onClick={startCountry}
+                            >
+                                Country Names
                         </Button>
                     </div>
                 </div>
