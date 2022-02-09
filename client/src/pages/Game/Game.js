@@ -55,6 +55,7 @@ const Game = () => {
                 answerArray[i] = "_";
             }
         }
+        setWaitingForMovie(false);
         setAnswerArrayState(answerArray);
         return movie;
     }
@@ -90,6 +91,7 @@ const Game = () => {
     const [isLoss, setIsLoss] = useState(false);
     const [difficulty, setDifficulty] = useState("");
     const [category, setCategory] = useState("");
+    const [waitingForMovie, setWaitingForMovie] = useState(false);
 
     const startEasy = () => {
         setRemainingGuesses(7);
@@ -117,6 +119,7 @@ const Game = () => {
 
     const startMovie = async () => {
         setRemainingGuesses(6);
+        setWaitingForMovie(true);
         setCurrentWord(await getMovie());
         setDifficulty("standard");
         setCategory("movie");
@@ -387,45 +390,51 @@ const Game = () => {
                     </div>
                 </>
             ) : (
-                <div className="container d-flex flex-wrap justify-content-center">
-                    <h1 className="col-10">Select a Difficulty</h1>
-                    <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
-                        <Button 
-                            className="col-3 col-md-3 col-lg-2"
-                            onClick={startEasy}
-                        >
-                            Easy
-                        </Button>
-                        <Button 
-                            className="col-3 col-md-3 col-lg-2"
-                            onClick={startStandard}
-                        >
-                            Standard
-                        </Button>
-                        <Button 
-                            className="col-3 col-md-3 col-lg-2"
-                            onClick={startHard}
-                        >
-                            Hard
-                        </Button>
-                    </div>
-                    <h2 className="col-10 pt-3">Or</h2>
-                    <h1 className="col-10">Choose a Category</h1>
-                    <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
-                        <Button 
+                <>
+                {waitingForMovie ? (
+                    <h2>Loading...</h2>
+                ) : (
+                    <div className="container d-flex flex-wrap justify-content-center">
+                        <h1 className="col-10">Select a Difficulty</h1>
+                        <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
+                            <Button 
                                 className="col-3 col-md-3 col-lg-2"
-                                onClick={startMovie}
+                                onClick={startEasy}
                             >
-                                Movie Titles
-                        </Button>
-                        <Button 
+                                Easy
+                            </Button>
+                            <Button 
                                 className="col-3 col-md-3 col-lg-2"
-                                onClick={startCountry}
+                                onClick={startStandard}
                             >
-                                Country Names
-                        </Button>
+                                Standard
+                            </Button>
+                            <Button 
+                                className="col-3 col-md-3 col-lg-2"
+                                onClick={startHard}
+                            >
+                                Hard
+                            </Button>
+                        </div>
+                        <h2 className="col-10 pt-3">Or</h2>
+                        <h1 className="col-10">Choose a Category</h1>
+                        <div className="col-12 col-sm-10 pt-3 justify-content-evenly d-flex">
+                            <Button 
+                                    className="col-3 col-md-3 col-lg-2"
+                                    onClick={startMovie}
+                                >
+                                    Movie Titles
+                            </Button>
+                            <Button 
+                                    className="col-3 col-md-3 col-lg-2"
+                                    onClick={startCountry}
+                                >
+                                    Country Names
+                            </Button>
+                        </div>
                     </div>
-                </div>
+                )}  
+                </>
             )}
         </div>
     )
